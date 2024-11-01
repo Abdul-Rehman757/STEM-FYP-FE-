@@ -99,9 +99,83 @@
 
 
 
+// import React, { useState } from 'react';
+// import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+// import Navbar from './components/Navbar';
+// import Footer from './components/Footer';
+// import LoginForm from './pages/login';
+// import SignUpForm from './pages/signup';
+// import ForgotPassword from './pages/forgetPassword';
+// import Home from './pages/Home';
+// import Projects from './pages/Project';
+// import Submit from './pages/Submit';
+// import Admin from './pages/Admin';
+// import Account from './pages/Account';
+// import Industrialist from './pages/Industrialist';
+
+// const App = () => {
+//   const [isAuthenticated, setIsAuthenticated] = useState(false); // Tracks if the user is authenticated
+
+//   // Function to simulate login
+//   const handleLogin = () => {
+//     setIsAuthenticated(true); // Set the user as authenticated
+//   };
+
+//   // Function to simulate logout
+//   const handleLogout = () => {
+//     setIsAuthenticated(false); // Set the user as not authenticated
+//   };
+
+//   return (
+//     <Router>
+//       <div className="app-container">
+//         {/* Show Header and Navbar only if authenticated */}
+//         {isAuthenticated && <Header />}
+//         {isAuthenticated && <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />}
+
+//         <main className="main-content">
+//           <Routes>
+//             {/* Public Routes: Login, Signup, ForgotPassword */}
+//             <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginForm onLogin={handleLogin} />} />
+//             <Route path="/signup" element={isAuthenticated ? <Navigate to="/home" /> : <SignUpForm onSignUp={handleLogin} />} />
+//             <Route path="/forgot-password" element={isAuthenticated ? <Navigate to="/home" /> : <ForgotPassword />} />
+
+//             {/* Protected Routes: User can access only after login */}
+//             {isAuthenticated ? (
+//               <>
+//                 <Route path="/home" element={<Home />} />
+//                 <Route path="/projects" element={<Projects />} />
+//                 <Route path="/submit" element={<Submit />} />
+//                 <Route path="/admin" element={<Admin />} />
+//                 <Route path="/account" element={<Account />} />
+//                 <Route path="/industrialist" element={<Industrialist />} />
+//                 <Route path="*" element={<Navigate to="/home" />} /> {/* Redirect unknown routes to Home */}
+//               </>
+//             ) : (
+//               <Route path="*" element={<Navigate to="/login" />} /> /* Redirect unknown routes to Login */
+//             )}
+//           </Routes>
+//         </main>
+
+//         {/* Show Footer only if authenticated */}
+//         {isAuthenticated && <Footer />}
+//       </div>
+//     </Router>
+//   );
+// };
+
+// export default App;
+
+
+
+
+
+
+
+
+
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
- import Header from './components/Header';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LoginForm from './pages/login';
@@ -115,33 +189,24 @@ import Account from './pages/Account';
 import Industrialist from './pages/Industrialist';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Tracks if the user is authenticated
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Function to simulate login
-  const handleLogin = () => {
-    setIsAuthenticated(true); // Set the user as authenticated
-  };
-
-  // Function to simulate logout
-  const handleLogout = () => {
-    setIsAuthenticated(false); // Set the user as not authenticated
-  };
+  const handleLogin = () => setIsAuthenticated(true);
+  const handleLogout = () => setIsAuthenticated(false);
 
   return (
     <Router>
       <div className="app-container">
-        {/* Show Header and Navbar only if authenticated */}
-        {isAuthenticated && <Header />}
-        {isAuthenticated && <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />}
+        {isAuthenticated && (
+          <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        )}
 
         <main className="main-content">
           <Routes>
-            {/* Public Routes: Login, Signup, ForgotPassword */}
             <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginForm onLogin={handleLogin} />} />
             <Route path="/signup" element={isAuthenticated ? <Navigate to="/home" /> : <SignUpForm onSignUp={handleLogin} />} />
             <Route path="/forgot-password" element={isAuthenticated ? <Navigate to="/home" /> : <ForgotPassword />} />
 
-            {/* Protected Routes: User can access only after login */}
             {isAuthenticated ? (
               <>
                 <Route path="/home" element={<Home />} />
@@ -150,15 +215,14 @@ const App = () => {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/industrialist" element={<Industrialist />} />
-                <Route path="*" element={<Navigate to="/home" />} /> {/* Redirect unknown routes to Home */}
+                <Route path="*" element={<Navigate to="/home" />} />
               </>
             ) : (
-              <Route path="*" element={<Navigate to="/login" />} /> /* Redirect unknown routes to Login */
+              <Route path="*" element={<Navigate to="/login" />} />
             )}
           </Routes>
         </main>
 
-        {/* Show Footer only if authenticated */}
         {isAuthenticated && <Footer />}
       </div>
     </Router>

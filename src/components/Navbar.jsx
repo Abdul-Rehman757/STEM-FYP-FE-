@@ -170,3 +170,79 @@ function Navbar({ isAuthenticated, onLogout }) {
 
 export default Navbar;
 
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { Link } from 'react-router-dom';
+
+// function Navbar({ isAuthenticated, onLogout }) {
+//   const [menuOpen, setMenuOpen] = useState(false);
+
+//   const toggleMenu = () => setMenuOpen(!menuOpen);
+
+//   return (
+//     <nav className="bg-teal-600 py-4"> {/* Increased padding for height */}
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        
+//         {/* Logo */}
+//         <div className="flex items-center">
+//           <img src="/pages/IMages/LGU-2-scaled.jpg" alt="logo" className="w-10 h-10 mr-3" /> {/* Replace with actual path */}
+//           <span className="text-white text-xl font-bold">STEM PROJECTS SHOWCASE</span>
+//         </div>
+
+//         <div className="lg:hidden">
+//           <button onClick={toggleMenu} className="text-white focus:outline-none">
+//             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+//             </svg>
+//           </button>
+//         </div>
+
+//         <ul className={`lg:flex ${menuOpen ? 'block' : 'hidden'} flex-col lg:flex-row lg:items-center lg:space-x-4 text-center lg:text-left`}>
+//           <li className="m-2">
+//             <Link to="/home" className="text-white px-4 py-2 rounded hover:bg-teal-700">Home</Link>
+//           </li>
+//           {isAuthenticated && (
+//             <>
+//               <li className="m-2">
+//                 <Link to="/projects" className="text-white px-4 py-2 rounded hover:bg-teal-700">Projects</Link>
+//               </li>
+//               <li className="m-2">
+//                 <Link to="/submit" className="text-white px-4 py-2 rounded hover:bg-teal-700">Submit Project</Link>
+//               </li>
+//               <li className="m-2">
+//                 <Link to="/account" className="text-white px-4 py-2 rounded hover:bg-teal-700">My Account</Link>
+//               </li>
+//               <li className="m-2">
+//                 <Link to="/industrialist" className="text-white px-4 py-2 rounded hover:bg-teal-700">Industrialists</Link>
+//               </li>
+//               <li className="m-2">
+//                 <Link to="/admin" className="text-white px-4 py-2 rounded hover:bg-teal-700">Admin</Link>
+//               </li>
+//               <li className="m-2">
+//                 <button onClick={onLogout} className="text-white px-4 py-2 rounded hover:bg-teal-700">Logout</button>
+//               </li>
+//             </>
+//           )}
+//           {!isAuthenticated && (
+//             <li className="m-2">
+//               <Link to="/login" className="text-white px-4 py-2 rounded hover:bg-teal-700">Login</Link>
+//             </li>
+//           )}
+//         </ul>
+//       </div>
+//     </nav>
+//   );
+// }
+
+// export default Navbar;
+

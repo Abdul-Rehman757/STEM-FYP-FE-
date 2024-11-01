@@ -106,3 +106,5 @@ function Industrialist() {
 }
 
 export default Industrialist;
+
+
