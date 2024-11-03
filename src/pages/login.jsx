@@ -57,8 +57,6 @@
 
 
 
-
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import backgroundImage from './Images/LGU-2-scaled.jpg'; // Adjust this path based on your folder structure
@@ -66,22 +64,39 @@ import backgroundImage from './Images/LGU-2-scaled.jpg'; // Adjust this path bas
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
-  // Username validation: must be at least 8 characters
+  // Username validation: must be at least 6 alphabetic characters
   const handleUsernameChange = (e) => {
     const value = e.target.value;
     setUsername(value);
-    setIsUsernameValid(value.length >= 8);
+    if (/^[A-Za-z]{6,}$/.test(value)) {
+      setIsUsernameValid(true);
+      setUsernameError('');
+    } else {
+      setIsUsernameValid(false);
+      setUsernameError('Username must be at least 6 alphabetic characters.');
+    }
   };
 
-  // Password validation: must be at least 6 characters and include at least one special character
+  // Password validation: must be at least 6 characters with digits and special characters
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    setIsPasswordValid(value.length >= 6 && specialCharRegex.test(value));
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+    if (passwordRegex.test(value)) {
+      setIsPasswordValid(true);
+      setPasswordError('');
+    } else {
+      setIsPasswordValid(false);
+      setPasswordError(
+        'Password must be at least 6 characters and include both numbers and special characters.'
+
+      );
+    }
   };
 
   // Form submit handler
@@ -111,10 +126,14 @@ const LoginForm = ({ onLogin }) => {
             value={username}
             onChange={handleUsernameChange}
             required
-            className={`w-full px-3 py-2 mb-4 border ${
+            className={`w-full px-3 py-2 mb-1 border ${
               isUsernameValid ? 'border-gray-300' : 'border-red-500'
             } rounded-md focus:outline-none focus:ring-2 focus:ring-green-500`}
           />
+          {username && !isUsernameValid && (
+            <p className="text-red-500 text-xs mb-4">{usernameError}</p>
+          )}
+          
           {/* Password Input, disabled until username is valid */}
           <input
             type="password"
@@ -123,12 +142,16 @@ const LoginForm = ({ onLogin }) => {
             onChange={handlePasswordChange}
             required
             disabled={!isUsernameValid}
-            className={`w-full px-3 py-2 mb-4 border ${
+            className={`w-full px-3 py-2 mb-1 border ${
               isPasswordValid ? 'border-gray-300' : 'border-red-500'
             } rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${
               !isUsernameValid && 'bg-gray-100 cursor-not-allowed'
             }`}
           />
+          {password && !isPasswordValid && (
+            <p className="text-red-500 text-xs mb-4">{passwordError}</p>
+          )}
+          
           {/* Submit Button, disabled until both fields are valid */}
           <button
             type="submit"
