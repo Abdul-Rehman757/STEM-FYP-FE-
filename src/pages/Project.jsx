@@ -46,6 +46,14 @@ const categoriesData = [
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter projects based on search term within selected category
+  const filteredProjects = selectedCategory
+    ? selectedCategory.projects.filter(project =>
+        project.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   // Function to render star rating
   const renderStars = (rating) => {
@@ -85,7 +93,10 @@ const Projects = () => {
         // Display projects within the selected category
         <div>
           <button
-            onClick={() => setSelectedCategory(null)}
+            onClick={() => {
+              setSelectedCategory(null);
+              setSearchTerm(''); // Clear search term when returning to categories
+            }}
             className="text-teal-600 underline mb-4"
           >
             ← Back to Categories
@@ -93,20 +104,36 @@ const Projects = () => {
           <h3 className="text-2xl font-semibold text-teal-800 mb-4">
             {selectedCategory.name} Projects
           </h3>
+
+          {/* Search bar for filtering projects in the selected category */}
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder={`Search in ${selectedCategory.name} projects...`}
+              className="p-2 border border-gray-300 rounded w-full"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {selectedCategory.projects.map((project, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300"
-              >
-                <h4 className="text-xl font-semibold text-teal-800 mb-2">{project.title}</h4>
-                <p className="mb-2">{project.description}</p>
-                <div className="flex items-center">
-                  <div className="flex">{renderStars(Math.round(project.rating))}</div>
-                  <span className="ml-2 text-teal-600 font-bold">{project.rating}</span>
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300"
+                >
+                  <h4 className="text-xl font-semibold text-teal-800 mb-2">{project.title}</h4>
+                  <p className="mb-2">{project.description}</p>
+                  <div className="flex items-center">
+                    <div className="flex">{renderStars(Math.round(project.rating))}</div>
+                    <span className="ml-2 text-teal-600 font-bold">{project.rating}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-gray-500">No projects found.</p>
+            )}
           </div>
         </div>
       )}
@@ -115,9 +142,3 @@ const Projects = () => {
 };
 
 export default Projects;
-
-
-
-
-
-
